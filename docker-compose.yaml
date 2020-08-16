@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+    mongodb:
+      image: mongo
+      networks:
+        - mongod-net
+      ports:
+        - '27017:27017'
+
+    mongodbimporter:
+      build: .
+      command: bash -c "cd ./northwind-data/ && ./mongo-import.sh"
+      depends_on:
+        - mongodb
+      networks:
+        - mongod-net
+
+
+networks:
+  mongod-net:
+    driver: bridge
