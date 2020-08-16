@@ -3,12 +3,12 @@ using Northwind.Data.Entities;
 
 namespace Northwind.Api.Repository
 {
-    public interface ICategoryRepository : IBaseRepository<Categories>
+    public interface ICategoryRepository : IBaseRepository<Category>
     {
         
     }
 
-    public class CategoryRepository : BaseRepository<Categories>, ICategoryRepository
+    public class CategoryRepository : BaseRepository<Category>, ICategoryRepository
     {
         public CategoryRepository(INorthwindMongoDbContext context) : base(context)
         {

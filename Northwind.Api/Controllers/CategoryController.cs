@@ -22,7 +22,7 @@ namespace Northwind.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Categories>>> Get()
+        public async Task<ActionResult<IEnumerable<Category>>> Get()
         {
             var categories = await _categoryRepository.GetAll();
             
@@ -30,7 +30,7 @@ namespace Northwind.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Categories>> GetById(Guid id)
+        public async Task<ActionResult<Category>> GetById(Guid id)
         {
             var product = await _categoryRepository.GetById(id);
             return Ok(product);

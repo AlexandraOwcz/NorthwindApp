@@ -1,9 +1,11 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using Northwind.Data.Attributes;
 
 namespace Northwind.Data.Entities
 {
-    public class Categories
+    [BsonCollection("Categories")]
+    public class Category
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]

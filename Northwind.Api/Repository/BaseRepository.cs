@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using MongoDB.Bson;
 using MongoDB.Driver;
+using Northwind.Data.Attributes;
 using Northwind.Data.Entities;
 using ServiceStack;
 
@@ -15,7 +18,7 @@ namespace Northwind.Data
         protected BaseRepository(INorthwindMongoDbContext context)
         {
             _context = context;
-            DbSet = _context.GetCollection<TEntity>(typeof(TEntity).Name);
+            DbSet = _context.GetCollection<TEntity>(GetCollectionName());
         }
 
         public virtual Task Add(TEntity obj)
@@ -32,7 +35,7 @@ namespace Northwind.Data
         public virtual async Task<List<TEntity>> GetAll()
         {
             // await DbSet.Find(a => true).ToListAsync();
-            var all = (await DbSet.FindAsync(Builders<TEntity>.Filter.Empty)).ToList();
+            var all = await DbSet.Find(Builders<TEntity>.Filter.Empty).ToListAsync();
             return all;
         }
         // TODO: https://www.skylinetechnologies.com/Blog/Skyline-Blog/February_2018/how-to-use-dot-net-core-cli-create-multi-project
@@ -50,6 +53,13 @@ namespace Northwind.Data
         public void Dispose()
         {
             GC.SuppressFinalize(this);
+        }
+
+
+        private string GetCollectionName()
+        {
+            return (typeof(TEntity).GetCustomAttributes(typeof(BsonCollectionAttribute), true).FirstOrDefault()
+                as BsonCollectionAttribute).CollectionName;
         }
     }
 }
