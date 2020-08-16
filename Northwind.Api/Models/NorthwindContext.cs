@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
-using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
+using Northwind.Api.Extensions;
 using Northwind.Api.Models;
 
 namespace Northwind.Data.Entities
@@ -42,6 +42,8 @@ namespace Northwind.Data.Entities
             MongoClient = new MongoClient(settings.Value.ConnectionString);
             if (MongoClient != null)
                 Database = MongoClient.GetDatabase(settings.Value.DatabaseName);
+            if (!Database.Ping())
+                throw new Exception("Could not connect to MongoDb");
                 
         }
 
