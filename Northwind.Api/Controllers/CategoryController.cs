@@ -30,7 +30,7 @@ namespace Northwind.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Category>> GetById(Guid id)
+        public async Task<ActionResult<Category>> GetById(string id)
         {
             var product = await _categoryRepository.GetById(id);
             return Ok(product);

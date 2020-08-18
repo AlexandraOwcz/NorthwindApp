@@ -4,8 +4,8 @@ using Northwind.Data.Attributes;
 
 namespace Northwind.Data.Entities
 {
-    [BsonCollection("Categories")]
-    public class Category
+    [BsonCollection("categories")]
+    public class Category : IEntity
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
